@@ -1,4 +1,13 @@
-﻿using System;
+﻿/// <summary>
+/// Displays the main form used for viewing customers and invoices.
+/// <sumary>
+/// <remarks>
+/// author: David Pyle 041110777
+/// version: 1.0
+/// date: 25/4/2016
+/// </remarks>
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,13 +21,8 @@ using System.Collections.Specialized;
 namespace UIAssignment3
 {
     /// <summary>
-    /// Displays the main form used for viewing customers and invoices.
+    /// Main class for displaying application interface
     /// </summary>
-    /// <remarks>
-    /// author: David Pyle 041110777
-    /// version: 1.0
-    /// date: 25/4/2016
-    /// </remarks>
     public partial class MainForm : Form
     {
         /// <summary>
@@ -170,15 +174,6 @@ namespace UIAssignment3
             dgInvoiceDetails.ReadOnly = true;
             dgInvoiceDetails.AutoGenerateColumns = false;
             dgInvoiceDetails.RowHeadersVisible = false;
-
-            //bind Invoice Details groupbox title to invoice number. Also add some custom text to the binding.
-            var binding = new Binding("Text", invBS, "InvoiceNum");
-            binding.Format += delegate(object sentFrom, ConvertEventArgs convertEventArgs)
-            {
-                convertEventArgs.Value = "Items for Invoice Number: " + convertEventArgs.Value;
-            };
-            //add the binding to the groupbox title
-            gbInvoiceDetails.DataBindings.Add(binding);
 
             //clear any default grid selections when it loads
             dgInvoiceDetails.ClearSelection();

@@ -1,14 +1,4 @@
-﻿/// <summary>
-/// Displays the invoice form for editing an existing invoice details or
-/// for adding a new invoice
-/// <sumary>
-/// <remarks>
-/// author: David Pyle 041110777
-/// version: 1.0
-/// date: 25/4/2016
-/// </remarks>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +10,15 @@ using System.Windows.Forms;
 
 namespace UIAssignment3
 {
+    /// <summary>
+    /// Displays the invoice form for editing an existing invoice details or
+    /// for adding a new invoice
+    /// </summary>
+    /// <remarks>
+    /// author: David Pyle 041110777
+    /// version: 1.0
+    /// date: 25/4/2016
+    /// </remarks>
     public partial class InvoiceForm : Form
     {
         /// <summary>
@@ -31,12 +30,24 @@ namespace UIAssignment3
         /// </summary>
         public string purpose;
 
-      
+        /// <summary>
+        /// List of items that have been selected when adding or editing an invoice
+        /// </summary>
         List<string> selectedItems = new List<string>();
+
+        /// <summary>
+        /// Data view for filtering the list of available items to select
+        /// </summary>
         DataView comboView;
 
-        private BindingSource formDataSource = null;
+        /// <summary>
+        /// Binding source for invoice data
+        /// </summary>
+        private BindingSource formDataSource;
 
+        /// <summary>
+        /// The customer number for the invoice
+        /// </summary>
         private int currentCustNum;
 
         /// <summary>
@@ -45,7 +56,8 @@ namespace UIAssignment3
         public InvoiceForm(BindingSource formDataSource, int currentCustNum)
         {
             InitializeComponent();
-
+            
+            //add a form closing handler
             this.FormClosing += new FormClosingEventHandler(addInvoiceForm_FormClosing); 
 
             //set the format for the date pickers
@@ -54,15 +66,17 @@ namespace UIAssignment3
             paymentDatePicker.CustomFormat = "dd/MM/yyyy";
             paymentDatePicker.Format = DateTimePickerFormat.Custom;
 
+            //set the binding source
             this.formDataSource = formDataSource;
+            //set the customer number that the invoice belongs to
             this.currentCustNum = currentCustNum;
         }
 
         /// <summary>
         /// Cancels any edits if the user closes the dialog using the red x
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Object source</param>
+        /// <param name="e">Event arguments</param>
         private void addInvoiceForm_FormClosing(Object sender, FormClosingEventArgs e)
         { 
             //closing the dialog using the red x results in a DialogResult.Cancel
@@ -70,6 +84,7 @@ namespace UIAssignment3
             {
                 //cancel edits to the data grid and dataset
                 dgAddInvoiceItems.CancelEdit();
+                //reject any changes to the dataset
                 parent.ds.RejectChanges();
             }           
         }
@@ -82,8 +97,11 @@ namespace UIAssignment3
         /// <param name="e">Event arguments</param>
         private void btCancel_Click(object sender, EventArgs e)
         {
+            //cancel edits to the data grid and dataset
             dgAddInvoiceItems.CancelEdit();
+            //reject any changes to the dataset
             parent.ds.RejectChanges();
+            //close the form
             this.Dispose();
         }
 
@@ -173,31 +191,38 @@ namespace UIAssignment3
 
             //add existing items to the item filter list so they can't be selected again
             for (int i=0; i<dgAddInvoiceItems.Rows.Count-1; i++) {
-                Console.WriteLine("Existing item: " + dgAddInvoiceItems.Rows[i].Cells[0].Value);
                 selectedItems.Add(dgAddInvoiceItems.Rows[i].Cells[0].Value.ToString());
             }
             //apply filter to items list
             filterItemList();
-
         }
 
+        /// <summary>
+        /// Filters the combobox of items so previously added items are not available
+        /// </summary>
         private void filterItemList()
         {
+            //if the list isn't empty
             if (selectedItems.Count > 0)
             {
+                //create the new data view
                 comboView = new DataView();
+                //set the source for the view
                 comboView.Table = parent.ds.Tables["Items"];
+                //set up the filter
                 string itemFilter = "ItemNum NOT IN (" + String.Join(",", selectedItems) + ")";
-                //Console.WriteLine("Filter is: " + itemFilter);
+                //apply the filter
                 comboView.RowFilter = itemFilter;
 
-                //Console.WriteLine("Num rows: " + dgAddInvoiceItems.Rows.Count);
+                //get the combox for the new row
                 DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dgAddInvoiceItems.Rows[dgAddInvoiceItems.Rows.Count - 1].Cells[0];
+                //set the datasource as the filtered item list
                 cb.DataSource = comboView;
             }
             else
             {
-                //Console.WriteLine("Resetting list");
+                //if there is only 1 row it means that the grid is empty of items so re-populate the combobox 
+                //with all items again               
                 DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)dgAddInvoiceItems.Rows[0].Cells[0];
                 cb.DataSource = parent.ds.Tables["Items"];
             }
@@ -210,8 +235,6 @@ namespace UIAssignment3
         {
             //combo box of items
             DataGridViewComboBoxColumn combo = new DataGridViewComboBoxColumn();
-            //itemList = parent.ds.Tables["Items"].AsEnumerable().Select(x => x[1].ToString()).ToList();
-            //combo.DataSource = itemList;
             combo.DataSource = parent.ds.Tables["Items"].DefaultView;
             combo.DataPropertyName = "ItemNum";
             combo.DisplayMember = "ItemName";
@@ -262,8 +285,6 @@ namespace UIAssignment3
 
             //clear any default selection
             dgAddInvoiceItems.ClearSelection();
-
-
         }
 
 
@@ -315,8 +336,10 @@ namespace UIAssignment3
         /// <param name="e">Event arguments</param>
         void dgAddInvoiceItems_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            filterItemList();
             
+            //filter the items list now that a row has been deleted. i.e. add the item that was removed back
+            //into the list of available items
+            filterItemList();           
 
             //if all items deleted from the table then disable the save button
             if (dgAddInvoiceItems.Rows.Count == 1)
@@ -339,8 +362,7 @@ namespace UIAssignment3
             {
                 // This fires the cell value changed handler below
                 dgAddInvoiceItems.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -364,12 +386,11 @@ namespace UIAssignment3
                         //something has been added so enable the save button
                         btnSave.Enabled = true;
                         //add the item to the data table
-                        addItemRow(Int16.Parse((cb.Value).ToString()), e);
-                        
+                        addItemRow(Int16.Parse((cb.Value).ToString()), e);                        
                     }
                 }
 
-                //if the qunatity has changed
+                //if the quantity has changed
                 if (e.ColumnIndex == 3)
                 {
                     //get the quantity entered by the user
@@ -397,7 +418,7 @@ namespace UIAssignment3
         {            
             //initialise invoice total
             decimal invTotalCost = 0;
-            Console.WriteLine("Inside updateInvoiceTotal. Row count is: " + dgAddInvoiceItems.Rows.Count);
+            
             //if there are no items clear the invoice total. Row count is 1 when grid is empty as an empty combobox is created. 
             if (dgAddInvoiceItems.Rows.Count == 1)
             {
@@ -415,19 +436,17 @@ namespace UIAssignment3
                 txtBoxInvoiceTotal.Text = "$" + invTotalCost.ToString("#.00");
             }            
         }
-
        
         /// <summary>
-        /// Adds a item to the invoice item data table
+        /// Adds an item and its details to the invoice item data table
         /// </summary>
-        /// <param name="itemNum"></param>
-        /// <param name="e"></param>
+        /// <param name="itemNum">Item number of item to add</param>
+        /// <param name="e">Event arguments of the DataGridViewCellEventArgs</param>
         private void addItemRow(int itemNum, DataGridViewCellEventArgs e)
         {
-            //Console.WriteLine("Adding row: " + e.RowIndex);
             //search for the item number in the items table
             DataRow[] result = parent.ds.Tables["Items"].Select("ItemNum = " + itemNum);
-            //DataRow[] result = parent.ds.Tables["Items"].Select("ItemName = '" + itemName + "'");
+         
             //add the item details to the data view grid
             foreach (DataRow row in result)
             {
@@ -441,14 +460,10 @@ namespace UIAssignment3
                 dgAddInvoiceItems.Rows[e.RowIndex].Cells[4].Value = row[3];
             }
 
-
-            int numRows = dgAddInvoiceItems.Rows.Count;
+            //add the new item to the selectedItems list so the user can't select it again
             selectedItems.Add(itemNum.ToString());
-
-            filterItemList();
-
-            
-            
+            //update the filtered item list
+            filterItemList();           
         }
 
         /// <summary>
@@ -496,7 +511,6 @@ namespace UIAssignment3
 
             //save the invoice items to the database
             parent.saveInvToDB(dgAddInvoiceItems, newInvoiceNum);
-
         }
 
         /// <summary>
@@ -519,8 +533,7 @@ namespace UIAssignment3
             Rows[0]["PaymentDueDate"] = paymentDueDate.Date;
 
             //save the updates to the database
-            parent.updateInvInDB(dgAddInvoiceItems, Int16.Parse(tbInvoiceNum.Text));
-            
+            parent.updateInvInDB(dgAddInvoiceItems, Int16.Parse(tbInvoiceNum.Text));            
         }        
 
         /// <summary>
@@ -546,11 +559,17 @@ namespace UIAssignment3
             }
         }
 
+        /// <summary>
+        /// Updates the selected items list just before the row is deleted
+        /// </summary>
+        /// <param name="sender">object source</param>
+        /// <param name="e">Event arguments</param>
         private void dgAddInvoiceItems_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             //get item that is being deleted
             DataGridViewRow theRow = e.Row;
             object value = theRow.Cells[0].Value;
+            //remove it from the selected items list so it's available again for selection
             selectedItems.Remove(Convert.ToString(value));
         }
     }

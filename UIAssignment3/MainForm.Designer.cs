@@ -96,55 +96,55 @@
             this.txtBoxPhone.Location = new System.Drawing.Point(153, 283);
             this.txtBoxPhone.Name = "txtBoxPhone";
             this.txtBoxPhone.ReadOnly = true;
-            this.txtBoxPhone.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxPhone.TabIndex = 31;
+            this.txtBoxPhone.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxPhone.TabIndex = 33;
             // 
             // txtBoxPostCode
             // 
             this.txtBoxPostCode.Location = new System.Drawing.Point(153, 251);
             this.txtBoxPostCode.Name = "txtBoxPostCode";
             this.txtBoxPostCode.ReadOnly = true;
-            this.txtBoxPostCode.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxPostCode.TabIndex = 30;
+            this.txtBoxPostCode.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxPostCode.TabIndex = 32;
             // 
             // txtBoxSuburb
             // 
             this.txtBoxSuburb.Location = new System.Drawing.Point(153, 187);
             this.txtBoxSuburb.Name = "txtBoxSuburb";
             this.txtBoxSuburb.ReadOnly = true;
-            this.txtBoxSuburb.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxSuburb.TabIndex = 29;
+            this.txtBoxSuburb.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxSuburb.TabIndex = 30;
             // 
             // txtBoxStreet
             // 
             this.txtBoxStreet.Location = new System.Drawing.Point(153, 155);
             this.txtBoxStreet.Name = "txtBoxStreet";
             this.txtBoxStreet.ReadOnly = true;
-            this.txtBoxStreet.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxStreet.TabIndex = 28;
+            this.txtBoxStreet.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxStreet.TabIndex = 29;
             // 
             // txtBoxLastName
             // 
             this.txtBoxLastName.Location = new System.Drawing.Point(153, 123);
             this.txtBoxLastName.Name = "txtBoxLastName";
             this.txtBoxLastName.ReadOnly = true;
-            this.txtBoxLastName.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxLastName.TabIndex = 27;
+            this.txtBoxLastName.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxLastName.TabIndex = 28;
             // 
             // txtBoxFirstName
             // 
             this.txtBoxFirstName.Location = new System.Drawing.Point(153, 91);
             this.txtBoxFirstName.Name = "txtBoxFirstName";
             this.txtBoxFirstName.ReadOnly = true;
-            this.txtBoxFirstName.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxFirstName.TabIndex = 26;
+            this.txtBoxFirstName.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxFirstName.TabIndex = 27;
             // 
             // txtBoxCustNum
             // 
             this.txtBoxCustNum.Location = new System.Drawing.Point(153, 29);
             this.txtBoxCustNum.Name = "txtBoxCustNum";
             this.txtBoxCustNum.ReadOnly = true;
-            this.txtBoxCustNum.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxCustNum.Size = new System.Drawing.Size(150, 20);
             this.txtBoxCustNum.TabIndex = 25;
             // 
             // lblPostCode
@@ -251,8 +251,8 @@
             this.txtBoxCompany.Location = new System.Drawing.Point(153, 60);
             this.txtBoxCompany.Name = "txtBoxCompany";
             this.txtBoxCompany.ReadOnly = true;
-            this.txtBoxCompany.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxCompany.TabIndex = 34;
+            this.txtBoxCompany.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxCompany.TabIndex = 26;
             // 
             // lblCompany
             // 
@@ -268,8 +268,8 @@
             this.txtBoxState.Location = new System.Drawing.Point(153, 220);
             this.txtBoxState.Name = "txtBoxState";
             this.txtBoxState.ReadOnly = true;
-            this.txtBoxState.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxState.TabIndex = 32;
+            this.txtBoxState.Size = new System.Drawing.Size(150, 20);
+            this.txtBoxState.TabIndex = 31;
             // 
             // gBoxInvoices
             // 
@@ -284,7 +284,7 @@
             // lbInvoiceNum
             // 
             this.lbInvoiceNum.FormattingEnabled = true;
-            this.lbInvoiceNum.Location = new System.Drawing.Point(23, 26);
+            this.lbInvoiceNum.Location = new System.Drawing.Point(23, 29);
             this.lbInvoiceNum.Name = "lbInvoiceNum";
             this.lbInvoiceNum.Size = new System.Drawing.Size(87, 277);
             this.lbInvoiceNum.TabIndex = 1;
@@ -305,7 +305,7 @@
             // lblFilter
             // 
             this.lblFilter.AutoSize = true;
-            this.lblFilter.Location = new System.Drawing.Point(21, 36);
+            this.lblFilter.Location = new System.Drawing.Point(21, 33);
             this.lblFilter.Name = "lblFilter";
             this.lblFilter.Size = new System.Drawing.Size(29, 13);
             this.lblFilter.TabIndex = 2;
@@ -322,7 +322,7 @@
             // lbCustomers
             // 
             this.lbCustomers.FormattingEnabled = true;
-            this.lbCustomers.Location = new System.Drawing.Point(21, 78);
+            this.lbCustomers.Location = new System.Drawing.Point(21, 81);
             this.lbCustomers.Name = "lbCustomers";
             this.lbCustomers.Size = new System.Drawing.Size(115, 225);
             this.lbCustomers.TabIndex = 0;

@@ -1,14 +1,4 @@
-﻿/// <summary>
-/// Displays the customer form for editing an existing customer details or
-/// for adding a new customer
-/// <sumary>
-/// <remarks>
-/// author: David Pyle 041110777
-/// version: 1.0
-/// date: 25/4/2016
-/// </remarks>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +10,15 @@ using System.Windows.Forms;
 
 namespace UIAssignment3
 {
+    /// <summary>
+    /// Displays the customer form for editing an existing customer details or
+    /// for adding a new customer   
+    /// </summary>
+    /// <remarks>
+    /// author: David Pyle 041110777
+    /// version: 1.0
+    /// date: 25/4/2016
+    /// </remarks>
     public partial class CustomerForm : Form
     {
         /// <summary>
@@ -30,8 +29,10 @@ namespace UIAssignment3
         /// Reference to parent form
         /// </summary>
         public MainForm parent;
-
-        private BindingSource formDataSource = null;
+        /// <summary>
+        /// Binding source for the customer table
+        /// </summary>
+        private BindingSource formDataSource;
 
         /// <summary>
         /// Constructor initialises the UI components for the customer form
@@ -41,6 +42,7 @@ namespace UIAssignment3
             InitializeComponent();
             //disable automatic validation. This will be handled by an errorProvider class instead.
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            //set the binding source
             this.formDataSource = formDataSource;
         }
 
@@ -67,30 +69,22 @@ namespace UIAssignment3
             //set form theme
             showTheme(parent.theme);
 
-            //if adding a new customer
-            if (purpose.Equals("Add"))
+            //if editing the customer  
+            if (purpose.Equals("Edit"))
             {
-                //set a new customer number
-                //txtBoxCustNum.Text = parent.getNewCustNum();
-            }
-            //if editing an existing customer
-            else if (purpose.Equals("Edit"))
-            {
-                //get the customer number
-                //txtBoxCustNum.Text = parent.currentSelectedCustomer.CustNum;
-
+                //bind the existing customer details
                 bindCustDetails();
 
                 //hide the all fields reqd label
-                lblAllReqd.Visible = false;
-                //populate form fields with customer details
-                //fillCustomerDetails();
+                lblAllReqd.Visible = false;               
             }
             //make the first editable text input active (company)
             this.ActiveControl = txtBoxCompany;
         }
 
-
+        /// <summary>
+        /// Binds customer details to their respective text boxes
+        /// </summary>
         public void bindCustDetails()
         {
             txtBoxCustNum.DataBindings.Add("Text", formDataSource, "CustNum", true);
@@ -105,7 +99,7 @@ namespace UIAssignment3
         }
 
         /// <summary>
-        /// Changes the interface baground image to the selected theme
+        /// Changes the interface background image to the selected theme
         /// </summary>
         /// <param name="theTheme">The name of the theme</param>
         private void showTheme(string theTheme)
@@ -152,8 +146,7 @@ namespace UIAssignment3
                 //check all fields ahve been filled in
                 if (this.ValidateChildren(ValidationConstraints.Enabled))
                 {
-                    //if no erros then create the customer
-                    //createNewCustomer();
+                    //if no erros then save the customer
                     saveCust();
                     //close the form
                     this.Dispose();
@@ -166,9 +159,8 @@ namespace UIAssignment3
                 if (this.ValidateChildren(ValidationConstraints.Enabled))
                 {
                     //if no errors then update the customer's details
-                    //updateCustomerDetails();
                     formDataSource.EndEdit();
-                    parent.saveCustToDB();
+                    parent.saveCustToDB("Edit");
                     //close the form
                     this.Dispose();
                 }
@@ -183,7 +175,7 @@ namespace UIAssignment3
         /// 
         private void saveCust()
         {
-
+            //create a new customer row in the customer table
             DataRow newRow = parent.ds.Tables["Customers"].NewRow();
             newRow["Company"] = txtBoxCompany.Text;
             newRow["FirstName"] = txtBoxFirstName.Text;
@@ -194,8 +186,10 @@ namespace UIAssignment3
             newRow["PostCode"] = txtBoxPostCode.Text;
             newRow["ContactPhone"] = txtBoxPhone.Text;
 
+            //update the table in the dataset
             parent.ds.Tables["Customers"].Rows.Add(newRow);
-            parent.saveCustToDB();
+            //update the database
+            parent.saveCustToDB("Add");
         }
        
         /// <summary>

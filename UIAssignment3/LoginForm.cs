@@ -1,13 +1,4 @@
-﻿/// <summary>
-/// Displays the login form and authenticates the user
-/// <sumary>
-/// <remarks>
-/// author: David Pyle 041110777
-/// version: 1.0
-/// date: 25/4/2016
-/// </remarks>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,20 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CustInvoiceLogin;
 
 namespace UIAssignment3
 {
+    /// <summary>
+    /// Displays the login form and authenticates the using details stored in a dll file
+    /// </summary>
+    /// <remarks>
+    /// author: David Pyle 041110777
+    /// version: 1.0
+    /// date: 01/06/2016
+    /// </remarks>
     public partial class LoginForm : Form
     {
-        /// <summary>
-        /// Login username
-        /// </summary>
-        private const string USERNAME = "";
-        /// <summary>
-        /// Login password
-        /// </summary>
-        private const string PASSWORD = "";
-
+        
         /// <summary>
         /// Constructor initialise the UI components on the login form
         /// </summary>
@@ -46,7 +38,7 @@ namespace UIAssignment3
         private void btnLogin_Click(object sender, EventArgs e)
         {
             //check if the username and password entered matches the correct username and password
-            if (txtBoxUser.Text.Equals(USERNAME) && txtBoxPassword.Text.Equals(PASSWORD))
+            if (txtBoxUser.Text.Equals(CustInvoiceLogin.Login.getUsername()) && txtBoxPassword.Text.Equals(CustInvoiceLogin.Login.getPassword()))
             {
                 //login ok                            
                 DialogResult = DialogResult.OK;
