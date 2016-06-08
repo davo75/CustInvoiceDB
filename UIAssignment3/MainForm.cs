@@ -57,7 +57,7 @@ namespace UIAssignment3
         public MainForm()
         {
             InitializeComponent();
-            //string connStr = "server=223.27.22.124;User Id=davep001;password=Davo001;database=041110777_invoice";
+            //connStr = "server=223.27.22.124;User Id=davep001;password=Davo001;database=041110777_invoice";
             connStr = "server=127.0.0.1;User Id=root;password=dave;database=041110777_invoice";
         }
 
@@ -125,6 +125,9 @@ namespace UIAssignment3
 
             //set payment status message font to bold
             lblStatus.Font = new Font(lblStatus.Font, FontStyle.Bold);
+
+            //set the theme selection to Default
+            cboxTheme.SelectedIndex = 0;
         }
 
         /// <summary>

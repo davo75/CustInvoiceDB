@@ -536,6 +536,7 @@
             this.btnSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnSearch.Size = new System.Drawing.Size(46, 22);
             this.btnSearch.Text = "Search";
+            this.btnSearch.ToolTipText = "Search Invoice Number";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // txtBoxInvSearch

@@ -62,6 +62,7 @@ namespace UIAssignment3
             catch (MySqlException ex)
             {
                 Console.WriteLine("Error: " + ex.ToString());
+                MessageBox.Show("Unable to connect to the database!", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             finally
